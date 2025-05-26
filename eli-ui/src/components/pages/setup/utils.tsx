@@ -69,34 +69,14 @@ export const DATA_SOURCE_OPTIONS = {
     guide: '',
     disabled: false,
   },
-  [DATA_SOURCES.MSSQL]: {
-    ...getDataSourceConfig(DATA_SOURCES.MSSQL),
-    guide: '',
-    disabled: true,
-  },
   [DATA_SOURCES.BIG_QUERY]: {
     ...getDataSourceConfig(DATA_SOURCES.BIG_QUERY),
-    guide: '',
-    disabled: true,
-  },
-  [DATA_SOURCES.SNOWFLAKE]: {
-    ...getDataSourceConfig(DATA_SOURCES.SNOWFLAKE),
     guide: '',
     disabled: true,
   },
 } as { [key: string]: ButtonOption };
 
 export const TEMPLATE_OPTIONS = {
-  [SampleDatasetName.ECOMMERCE]: {
-    label: 'E-commerce',
-    IconComponent: ShoppingCartOutlined,
-    guide: 'https://docs.getwren.ai/oss/getting_started/sample_data/ecommerce',
-  },
-  [SampleDatasetName.HR]: {
-    label: 'Human Resource',
-    IconComponent: IdCardOutlined,
-    guide: 'https://docs.getwren.ai/oss/getting_started/sample_data/hr',
-  },
 };
 
 export const getDataSources = () => {

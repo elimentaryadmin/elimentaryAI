@@ -13,6 +13,55 @@ const StyledForm = styled(Form)`
 const DataSource = styled.div`
   border: 1px var(--gray-4) solid;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 0;
+  min-height: 56px;
+`;
+
+const PageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafbfc;
+`;
+
+const Card = styled.div`
+  background: #fff;
+  padding: 32px 40px;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  min-width: 400px;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 24px;
+`;
+
+const LogoLabelRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+`;
+
+const DataSourceLabel = styled.span`
+  font-size: 24px;
+  line-height: 40px;
+  font-weight: 500;
+  display: inline-block;
+  padding-top: 0px;
 `;
 
 interface Props {
@@ -40,54 +89,36 @@ export default function ConnectDataSource(props: Props) {
   };
 
   return (
-    <>
-      <Typography.Title level={1} className="mb-3">
-      </Typography.Title>
-      <StyledForm form={form} layout="vertical" className="p-6 my-6">
-        <Row align="middle" className="mb-6">
-          <Col span={12}>
-            <DataSource className="d-inline-block px-4 py-2 bg-gray-2 gray-8">
-              <Image
-                className="mr-2"
-                src={current.logo}
-                alt={dataSource}
-                width="40"
-                height="40"
-              />
-              {current.label}
-            </DataSource>
-          </Col>
-          <Col className="text-right" span={12}>
-            Learn more information in the {current.label}{' '}
-            <Link
-              href={current.guide}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              setup guide
-            </Link>
-            .
-          </Col>
-        </Row>
-        <current.component />
-      </StyledForm>
+    <PageWrapper>
+      <Card>
+        <Typography.Title level={1} className="mb-3">
+        </Typography.Title>
+        <StyledForm form={form} layout="vertical" className="p-6 my-6">
+          <Row align="right" className="mb-6">
+            <Col span={24}>
+              <DataSource className="d-inline-block px-4 py-2 bg-gray-2 gray-8">
+                  <DataSourceLabel>{current.label}</DataSourceLabel>
+              </DataSource>
+            </Col>
+          </Row>
+          <current.component />
+        </StyledForm>
 
-      {connectError && (
-        <Alert
-          message={connectError.shortMessage}
-          description={
-            dataSource === DATA_SOURCES.POSTGRES
-              ? getPostgresErrorMessage(connectError)
-              : connectError.message
-          }
-          type="error"
-          showIcon
-          className="my-6"
-        />
-      )}
+        {connectError && (
+          <Alert
+            message={connectError.shortMessage}
+            description={
+              dataSource === DATA_SOURCES.POSTGRES
+                ? getPostgresErrorMessage(connectError)
+                : connectError.message
+            }
+            type="error"
+            showIcon
+            className="my-6"
+          />
+        )}
 
-      <Row gutter={16} className="pt-6">
-        <Col span={12}>
+        <ButtonRow>
           <Button
             onClick={onBack}
             size="large"
@@ -96,8 +127,6 @@ export default function ConnectDataSource(props: Props) {
           >
             Back
           </Button>
-        </Col>
-        <Col className="text-right" span={12}>
           <Button
             type="primary"
             size="large"
@@ -107,8 +136,8 @@ export default function ConnectDataSource(props: Props) {
           >
             Next
           </Button>
-        </Col>
-      </Row>
-    </>
+        </ButtonRow>
+      </Card>
+    </PageWrapper>
   );
 }

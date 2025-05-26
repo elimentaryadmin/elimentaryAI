@@ -36,7 +36,7 @@ export default function MySQLProperties(props: Props) {
           },
         ]}
       >
-        <Input placeholder="10.1.1.1" disabled={isEditMode} />
+        <Input placeholder="127.0.0.1" disabled={isEditMode} />
       </Form.Item>
       <Form.Item
         label="Port"

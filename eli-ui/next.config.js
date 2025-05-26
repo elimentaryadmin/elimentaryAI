@@ -43,3 +43,16 @@ const nextConfig = withLess({
 });
 
 module.exports = withBundleAnalyzer(nextConfig);
+
+if (process.env.NODE_ENV === 'development') {
+  const suppressedWarnings = [
+    'Warning: React does not recognize the `defaultProps`',
+  ];
+  const realWarn = console.warn;
+  console.warn = (...args) => {
+    if (typeof args[0] === 'string' && suppressedWarnings.some(entry => args[0].includes(entry))) {
+      return;
+    }
+    realWarn(...args);
+  };
+}

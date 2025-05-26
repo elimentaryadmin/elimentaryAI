@@ -1,20 +1,39 @@
+'use client';
+
 import { Spin } from 'antd';
 import styled from 'styled-components';
 import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
+import { ReactNode } from 'react';
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 48px;
+interface StyledWrapperProps {
+  className?: string;
+}
+
+const Wrapper = styled.div<StyledWrapperProps>`
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 9999;
   background-color: white;
   display: none;
+  align-items: center;
+  justify-content: center;
 
   &.isShow {
     display: flex;
   }
+`;
+
+const LoadingContainer = styled.div`
+  text-align: center;
+`;
+
+const LoadingText = styled.div`
+  margin-top: 8px;
+  color: #1890ff;
+  font-size: 16px;
 `;
 
 interface Props {
@@ -22,7 +41,7 @@ interface Props {
 }
 
 interface LoadingProps {
-  children?: React.ReactNode | null;
+  children?: ReactNode;
   spinning?: boolean;
   loading?: boolean;
   tip?: string;
@@ -32,43 +51,51 @@ interface LoadingProps {
   className?: string;
 }
 
+interface FlexLoadingProps {
+  height?: number | string;
+  tip?: string;
+}
+
 export const defaultIndicator = (
-  <LoadingOutlined style={{ fontSize: 36 }} spin />
+  <LoadingOutlined style={{ fontSize: 36, color: '#1890ff' }} spin />
 );
 
 export const Spinner = ({ className = '', size = 36 }) => (
-  <LoadingOutlined className={className} style={{ fontSize: size }} spin />
+  <LoadingOutlined className={className} style={{ fontSize: size, color: '#1890ff' }} spin />
 );
 
 export default function PageLoading(props: Props) {
   const { visible } = props;
   return (
-    <Wrapper
-      className={`align-center justify-center${visible ? ' isShow' : ''}`}
-    >
-      <div className="text-center">
+    <Wrapper className={visible ? 'isShow' : ''}>
+      <LoadingContainer>
         <Spin indicator={defaultIndicator} />
-        <div className="mt-2 geekblue-6">Loading...</div>
-      </div>
+        <LoadingText>Loading...</LoadingText>
+      </LoadingContainer>
     </Wrapper>
   );
 }
 
-export const FlexLoading = (props) => {
-  const { height, tip } = props;
+export const FlexLoading = ({ height, tip }: FlexLoadingProps) => {
   return (
     <div
-      className="d-flex align-center justify-center flex-column geekblue-6"
-      style={{ height: height || '100%' }}
+      style={{ 
+        height: height || '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        color: '#1890ff'
+      }}
     >
       {defaultIndicator}
-      {tip && <span className="mt-2">{tip}</span>}
+      {tip && <LoadingText>{tip}</LoadingText>}
     </div>
   );
 };
 
 export const Loading = ({
-  children = null,
+  children,
   spinning = false,
   loading = false,
   tip,
@@ -81,11 +108,10 @@ export const Loading = ({
 interface LoadingWrapperProps {
   loading: boolean;
   tip?: string;
-  children: React.ReactElement;
+  children: ReactNode;
 }
 
-export const LoadingWrapper = (props: LoadingWrapperProps) => {
-  const { loading, tip, children } = props;
+export const LoadingWrapper = ({ loading, tip, children }: LoadingWrapperProps) => {
   if (loading) return <FlexLoading tip={tip} />;
-  return children;
+  return <>{children}</>;
 };

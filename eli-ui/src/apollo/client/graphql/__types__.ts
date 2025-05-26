@@ -317,7 +317,6 @@ export enum DataSourceName {
   MSSQL = 'MSSQL',
   MYSQL = 'MYSQL',
   POSTGRES = 'POSTGRES',
-  SNOWFLAKE = 'SNOWFLAKE',
 }
 
 export type DeleteDashboardItemInput = {

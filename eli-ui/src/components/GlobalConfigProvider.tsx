@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { getUserConfig, UserConfig } from '@/utils/env';
@@ -10,7 +11,7 @@ type ContextProps = {
 
 const GlobalConfigContext = createContext<ContextProps>({});
 
-export const GlobalConfigProvider = ({ children }) => {
+export function GlobalConfigProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [config, setConfig] = useState<UserConfig | null>(null);
 
@@ -36,8 +37,8 @@ export const GlobalConfigProvider = ({ children }) => {
       {children}
     </GlobalConfigContext.Provider>
   );
-};
-
-export default function useGlobalConfig() {
-  return useContext(GlobalConfigContext);
 }
+
+export function useGlobalConfig() {
+  return useContext(GlobalConfigContext);
+} 

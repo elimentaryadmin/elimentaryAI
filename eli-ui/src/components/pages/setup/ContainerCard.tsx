@@ -21,7 +21,7 @@ export default function ContainerCard(props: Props) {
     <Container maxWidth={maxWidth}>
       <Card>
         <Steps current={step} className="mb-12">
-          <Steps.Step title="Select Data Source" />
+          <Steps.Step title="Connect to Data Source" />
           <Steps.Step title="Select Tables" />
           <Steps.Step title="Define Relationships" />
         </Steps>
